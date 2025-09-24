@@ -1,10 +1,26 @@
+# 🎬 MoviesAPI - API para gestionar películas y series
 from fastapi import FastAPI
 
-app = FastAPI()
+from .routes.films_endpoints import router as films_router
+
+app = FastAPI(
+    title="🎬 MoviesAPI",
+    description="API para gestionar películas, series, watchlists y ratings",
+    version="1.0.0"
+)
+
+app.include_router(films_router)
 
 @app.get("/")
-def leer_raiz():
+def home():
     """
-    Esta función se ejecuta cuando alguien visita la raíz de nuestra API
+    🏠 Página principal de la API
     """
-    return {"mensaje": "¡Hola! Esta es mi primera API"}
+    return {
+        "mensaje": "¡Bienvenido a MoviesAPI! 🎬",
+        "descripcion": "API para gestionar películas y series",
+        "endpoints_disponibles": {
+            "films": "/films - Gestionar películas",
+            "docs": "/docs - Documentación interactiva"
+        }
+    }
